@@ -69,68 +69,12 @@ function getCourses(requiredRange){
 
 console.log (getCourses(requiredRange2));
 
-// сортировка в порядке возрастания учитывая, что null является бесконеностью
-function sortCourses(coursesToSort){
+// сортировка в порядке возрастания учитывая, что null является бесконеностью в конце интервала и 0 в начале
+let sortCourses = courses.sort(function(a, b) {
+  if (!a.prices[1] && !a.prices[1]) return 1;
+  const intA =  a.prices[1]?a.prices[1]:Number.MAX_VALUE - a.prices[0]?a.prices[0]:Number.MIN_VALUE;
+  const intB = b.prices[1]?b.prices[1]:Number.MAX_VALUE - b.prices[0]?b.prices[0]:Number.MIN_VALUE;
+  return intA - intB;
+});
 
-  function compare(array1, array2){
-
-      if(array2[0] == array2[1] &&  array2[1]==null){
-          return false;
-      } else if (array1[0] == null){
-          if (array2[0] == null){
-              if (array2[1] == null){
-                  return true;
-              } else {
-                  return array1[1] > array2[1];
-              }
-
-          } else if (array2[1] == null){
-              return false;
-          } else {
-              return array1[1] > array2[1];
-          }
-      } else if (array1[1] == null){
-          if (array2[1] == null) {
-              return array1[0] >= array2[0];
-          } else {
-              return true;
-          }
-      } else {
-          if (array2[0] == null){
-              return array1[1] > array2[1];
-          } else if (array2[1] == null){
-              return false;
-          } else {
-              if (array1[1] > array2[1]){
-                  return true;
-              } else if (array1[1] == array2[1]){
-                  return array1[0] > array2[0];
-              } else{
-                  return false;
-              }
-          }
-      }
-  }
-  let stepsCount = coursesToSort.length - 1;
-
-  let swapped;
-
-  do {
-    swapped = false;
-    for (let i = 0; i < stepsCount; i += 1) {
-        if (compare(coursesToSort[i]['prices'], coursesToSort[i+1]['prices'])) {
-    const temp = coursesToSort[i];
-    coursesToSort[i] = coursesToSort[i + 1];
-    coursesToSort[i + 1] = temp;
-    swapped = true;
-  }
-}
-stepsCount -= 1;
-} while (swapped);
-
-return coursesToSort;
-}
-
-
-
-console.log(sortCourses(courses));
+console.log(sortCourses);
